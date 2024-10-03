@@ -1357,6 +1357,16 @@ void BleGamepad::setBatteryLevel(uint8_t level)
     }
 }
 
+void BleGamepad::disconnect(void) {
+    if (this->connectionStatus->connected)
+    {
+        // Serial.println("Bounded devices: " + String(NimBLEDevice::getNumBonds()));
+        NimBLEDevice::deleteAllBonds();
+        uint16_t connID = 1;
+        NimBLEDevice::getServer()->disconnect(connID);
+    }
+}
+
 void BleGamepad::taskServer(void *pvParameter)
 {
     BleGamepad *BleGamepadInstance = (BleGamepad *)pvParameter; // static_cast<BleGamepad *>(pvParameter);
